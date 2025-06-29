@@ -1,3 +1,5 @@
+docker run --rm ethereum/client-go:stable --help
+
 NAME:
    geth - the go-ethereum command line interface
 
