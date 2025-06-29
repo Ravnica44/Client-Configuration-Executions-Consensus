@@ -1,0 +1,337 @@
+docker run --rm statusim/nimbus-eth2:multiarch-latest --help
+
+Nimbus beacon node v25.6.0-cb2d3b-stateofus
+
+Usage:
+
+nimbus_beacon_node [OPTIONS]... command
+
+The following options are available:
+
+     --config-file             Loads the configuration from a TOML file.
+     --log-level               Sets the log level for process and topics (e.g.
+                               "DEBUG; TRACE:discv5,libp2p; REQUIRED:none;
+                               DISABLED:none") [=INFO].
+     --log-file                Specifies a path for the written JSON log file
+                               (deprecated).
+     --network                 The Eth2 network to join [=mainnet].
+ -d, --data-dir                The directory where nimbus will store all
+                               blockchain data.
+     --validators-dir          A directory containing validator keystores.
+     --verifying-web3-signer-url  Remote Web3Signer URL that will be used as a
+                               source of validators.
+     --proven-block-property   The field path of a block property that will be
+                               sent for verification to the verifying Web3Signer
+                               (for example ".execution_payload.fee_recipient").
+     --web3-signer-url         Remote Web3Signer URL that will be used as a
+                               source of validators.
+     --web3-signer-update-interval  Number of seconds between validator list updates
+                               [=3600].
+     --secrets-dir             A directory containing validator keystore
+                               passwords.
+     --wallets-dir             A directory containing wallet files.
+     --web3-url                One or more execution layer Engine API URLs.
+     --el                      One or more execution layer Engine API URLs.
+     --no-el                   Don't use an EL. The node will remain
+                               optimistically synced and won't be able to
+                               perform validator duties [=false].
+     --non-interactive         Do not display interactive prompts. Quit on
+                               missing configuration.
+     --netkey-file             Source of network (secp256k1) private key file
+                               (random|<path>) [=random].
+     --insecure-netkey-password  Use pre-generated INSECURE password for network
+                               private key file [=false].
+     --agent-string            Node agent string which is used as identifier in
+                               network [=nimbus].
+     --subscribe-all-subnets   Subscribe to all subnet topics when gossiping
+                               [=false].
+     --num-threads             Number of worker threads ("0" = use as many
+                               threads as there are CPU cores available) [=0].
+     --jwt-secret              A file containing the hex-encoded 256 bit secret
+                               key to be used for verifying/generating JWT
+                               tokens.
+ -b, --bootstrap-node          Specifies one or more bootstrap nodes to use when
+                               connecting to the network.
+     --bootstrap-file          Specifies a line-delimited file of bootstrap
+                               Ethereum network addresses.
+     --listen-address          Listening address for the Ethereum LibP2P and
+                               Discovery v5 traffic [=*].
+     --tcp-port                Listening TCP port for Ethereum LibP2P traffic
+                               [=9000].
+     --udp-port                Listening UDP port for node discovery [=9000].
+     --max-peers               The target number of peers to connect to [=160].
+     --hard-max-peers          The maximum number of peers to connect to.
+                               Defaults to maxPeers * 1.5.
+     --nat                     Specify method to use for determining public
+                               address. Must be one of: any, none, upnp, pmp,
+                               extip:<IP> [=any].
+     --enr-auto-update         Discovery can automatically update its ENR with
+                               the IP address and UDP port as seen by other
+                               nodes it communicates with. This option allows to
+                               enable/disable this functionality [=false].
+     --weak-subjectivity-checkpoint  Weak subjectivity checkpoint in the format
+                               block_root:epoch_number.
+     --external-beacon-api-url  External beacon API to use for syncing (on empty
+                               database).
+     --sync-light-client       Accelerate sync using light client [=true].
+     --trusted-block-root      Recent trusted finalized block root to sync from
+                               external beacon API (with
+                               `--external-beacon-api-url`). Uses the light
+                               client sync protocol to obtain the latest
+                               finalized checkpoint (LC is initialized from
+                               trusted block root).
+     --trusted-state-root      Recent trusted finalized state root to sync from
+                               external beacon API (with
+                               `--external-beacon-api-url`).
+     --finalized-checkpoint-state  SSZ file specifying a recent finalized state.
+     --genesis-state           SSZ file specifying the genesis state of the
+                               network (for networks without a built-in genesis
+                               state).
+     --genesis-state-url       URL for obtaining the genesis state of the
+                               network (for networks without a built-in genesis
+                               state).
+     --node-name               A name for this node that will appear in the
+                               logs. If you set this to 'auto', a persistent
+                               automatically generated ID will be selected for
+                               each --data-dir folder.
+     --graffiti                The graffiti value that will appear in proposed
+                               blocks. You can use a 0x-prefixed hex encoded
+                               string to specify raw bytes.
+     --metrics                 Enable the metrics server [=false].
+     --metrics-address         Listening address of the metrics server
+                               [=127.0.0.1].
+     --metrics-port            Listening HTTP port of the metrics server
+                               [=8008].
+     --status-bar              Display a status bar at the bottom of the
+                               terminal screen [=true].
+     --status-bar-contents     Textual template for the contents of the status
+                               bar.
+     --rest                    Enable the REST server [=false].
+     --rest-port               Port for the REST server [=5052].
+     --rest-address            Listening address of the REST server
+                               [=127.0.0.1].
+     --rest-allow-origin       Limit the access to the REST API to a particular
+                               hostname (for CORS-enabled clients such as
+                               browsers).
+     --rest-statecache-size    The maximum number of recently accessed states
+                               that are kept in memory. Speeds up requests
+                               obtaining information for consecutive slots or
+                               epochs. [=3].
+     --rest-statecache-ttl     The number of seconds to keep recently accessed
+                               states in memory [=60].
+     --rest-request-timeout    The number of seconds to wait until complete REST
+                               request will be received [=infinite].
+     --rest-max-body-size      Maximum size of REST request body (kilobytes)
+                               [=16384].
+     --rest-max-headers-size   Maximum size of REST request headers (kilobytes)
+                               [=128].
+     --keymanager              Enable the REST keymanager API [=false].
+     --keymanager-port         Listening port for the REST keymanager API
+                               [=5052].
+     --keymanager-address      Listening port for the REST keymanager API
+                               [=127.0.0.1].
+     --keymanager-allow-origin  Limit the access to the Keymanager API to a
+                               particular hostname (for CORS-enabled clients
+                               such as browsers).
+     --keymanager-token-file   A file specifying the authorization token
+                               required for accessing the keymanager API.
+     --light-client-data-serve  Serve data for enabling light clients to stay in
+                               sync with the network [=true].
+     --light-client-data-import-mode  Which classes of light client data to import.
+                               Must be one of: none, only-new, full (slow
+                               startup), on-demand (may miss validator duties)
+                               [=only-new].
+     --light-client-data-max-periods  Maximum number of sync committee periods to
+                               retain light client data.
+     --in-process-validators   Disable the push model (the beacon node tells a
+                               signing process with the private keys of the
+                               validators what to sign and when) and load the
+                               validators in the beacon node itself [=true].
+     --discv5                  Enable Discovery v5 [=true].
+     --dump                    Write SSZ dumps of blocks and states to data dir
+                               [=false].
+     --direct-peer             The list of privileged, secure and known peers to
+                               connect and maintain the connection to. This
+                               requires a not random netkey-file. In the
+                               multiaddress format like:/ip4/<address>/tcp/<por
+                               t>/p2p/<peerId-public-key>, or enr format
+                               (enr:-xx). Peering agreements are established out
+                               of band and must be reciprocal.
+     --doppelganger-detection  If enabled, the beacon node prudently listens for
+                               2 epochs for attestations from a validator with
+                               the same index (a doppelganger), before sending
+                               an attestation itself. This protects against
+                               slashing (due to double-voting) but means you
+                               will miss two attestations when restarting.
+                               [=true].
+     --validator-monitor-auto  Monitor validator activity automatically for
+                               validators active on this beacon node [=true].
+     --validator-monitor-pubkey  One or more validators to monitor - works best
+                               when --subscribe-all-subnets is enabled.
+     --validator-monitor-details  Publish detailed metrics for each validator
+                               individually - may incur significant overhead
+                               with large numbers of validators [=false].
+     --suggested-fee-recipient  Suggested fee recipient.
+     --suggested-gas-limit     Suggested gas limit [=defaultGasLimit].
+     --payload-builder         Enable external payload builder [=false].
+     --payload-builder-url     Payload builder URL.
+     --local-block-value-boost  Increase execution layer block values for builder
+                               bid comparison by a percentage [=10].
+     --history                 Retention strategy for historical data
+                               (archive/prune) [=HistoryMode.Prune].
+
+Available sub-commands:
+
+nimbus_beacon_node deposits command
+
+Available sub-commands:
+
+nimbus_beacon_node deposits createTestnetDeposits [OPTIONS]...
+
+Creates validator keystores and deposits for testnet usage.
+
+The following options are available:
+
+     --count                   Number of deposits to generate [=1].
+     --wallet                  An existing wallet ID. If not specified, a new
+                               wallet will be created.
+     --out-validators-dir      Output folder for validator keystores
+                               [=validators].
+     --out-secrets-dir         Output folder for randomly generated keystore
+                               passphrases [=secrets].
+     --out-deposits-file       The name of generated deposits file.
+     --new-wallet-name         An easy-to-remember name for the wallet of your
+                               choice.
+     --new-wallet-file         Output wallet file.
+
+nimbus_beacon_node deposits import [OPTIONS]...
+
+Imports password-protected keystores interactively.
+
+The following options are available:
+
+     --method                  Specifies which import method will be used
+                               (normal, single-salt) [=ImportMethod.Normal].
+
+nimbus_beacon_node deposits exit [OPTIONS]...
+
+Submits a validator voluntary exit.
+
+The following options are available:
+
+     --validator               One or more validator index, public key or a
+                               keystore path of the exited validator(s).
+     --all                     Exit all validators in the specified data
+                               directory or validators directory [=false].
+     --epoch                   The desired exit epoch [=immediately].
+     --rest-url                URL of the beacon node REST service
+                               [=http://127.0.0.1:5052].
+     --print                   Print signed exit message instead of publishing
+                               it [=false].
+
+nimbus_beacon_node wallets command
+
+Available sub-commands:
+
+nimbus_beacon_node wallets create [OPTIONS]...
+
+Creates a new EIP-2386 wallet.
+
+The following options are available:
+
+     --next-account            Initial value for the 'nextaccount' property of
+                               the wallet.
+     --name                    An easy-to-remember name for the wallet of your
+                               choice.
+     --out                     Output wallet file.
+
+nimbus_beacon_node wallets restore [OPTIONS]...
+
+Restores a wallet from cold storage.
+
+The following options are available:
+
+     --name                    An easy-to-remember name for the wallet of your
+                               choice.
+     --out                     Output wallet file.
+     --deposits                Expected number of deposits to recover. If not
+                               specified, Nimbus will try to guess the number by
+                               inspecting the latest beacon state.
+
+nimbus_beacon_node wallets list
+
+Lists details about all wallets.
+
+nimbus_beacon_node record command
+
+Available sub-commands:
+
+nimbus_beacon_node record create [OPTIONS]...
+
+Create a new ENR.
+
+The following options are available:
+
+     --ip                      External IP address.
+     --tcp-port                External TCP port.
+     --udp-port                External UDP port.
+     --seq-number              Record sequence number [=1].
+     --field                   Additional record key pairs, provide as
+                               <string>:<bytes in hex>.
+
+nimbus_beacon_node record print <enr>
+
+Print the content of a given ENR.
+
+ <enr>                          ENR URI of the record to print.
+
+nimbus_beacon_node web3 command
+
+Available sub-commands:
+
+nimbus_beacon_node web3 test <url>
+
+Test a web3 provider.
+
+ <url>                          The web3 provider URL to test.
+
+nimbus_beacon_node slashingdb command
+
+Available sub-commands:
+
+nimbus_beacon_node slashingdb import <importedInterchangeFile>
+
+Import a EIP-3076 slashing protection interchange file.
+
+ <importedInterchangeFile>      EIP-3076 slashing protection interchange file to
+                               import.
+
+nimbus_beacon_node slashingdb export [OPTIONS]... <exportedInterchangeFile>
+
+Export a EIP-3076 slashing protection interchange file.
+
+ <exportedInterchangeFile>      EIP-3076 slashing protection interchange file to
+                               export.
+
+The following options are available:
+
+ -v, --validator               Limit the export to specific validators
+                               (specified as numeric indices or public keys).
+
+nimbus_beacon_node trustedNodeSync [OPTIONS]...
+
+The following options are available:
+
+     --trusted-node-url        URL of the REST API to sync from
+                               [=http://127.0.0.1:5052].
+     --state-id                State id to sync to - this can be "finalized", a
+                               slot number or state hash or "head".
+     --trusted-block-root      Recent trusted finalized block root to initialize
+                               light client from.
+     --backfill                Backfill blocks directly from REST server instead
+                               of fetching via API [=true].
+     --reindex                 Recreate historical state index at end of
+                               backfill, allowing full history access (requires
+                               full backfill) [=false].
+     --with-deposit-snapshot   Also try to download a snapshot of the deposit
+                               contract state [=false].
