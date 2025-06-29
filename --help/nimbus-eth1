@@ -1,0 +1,151 @@
+docker run --rm statusim/nimbus-eth1:latest --help
+
+Nim version 2.2.4
+
+Usage:
+
+nimbus_execution_client [OPTIONS]... command
+
+The following options are available:
+
+ETHEREUM OPTIONS:
+ -d, --data-dir                The directory where nimbus will store all
+                               blockchain data [=/root/.cache/nimbus].
+     --era1-dir                Directory where era1 (pre-merge) archive can be
+                               found [=<data-dir>/era1].
+     --era-dir                 Directory where era (post-merge) archive can be
+                               found [=<data-dir>/era].
+ -k, --key-store               Load one or more keystore files from this
+                               directory [=inside datadir].
+ -e, --import-key              Import unencrypted 32 bytes hex private key from
+                               a file.
+     --trusted-setup-file      Load EIP-4844 trusted setup file [=Baked in
+                               trusted setup].
+
+PAYLOAD BUILDING OPTIONS:
+     --extra-data              Value of extraData field when building an
+                               execution payload(max 32 bytes)
+                               [=nimbus-eth1/v0.1.0-fae85d93].
+     --gas-limit               Desired gas limit when building an execution
+                               payload [=45000000].
+
+ETHEREUM NETWORK OPTIONS:
+ -i, --network                 Name or id number of Ethereum network
+                               [=mainnet(1)].
+                               - mainnet/1       : Ethereum main network.
+                               - sepolia/11155111: Test network (proof-of-work).
+                               - holesky/17000   : The holesovice post-merge
+                               testnet.
+                               - hoodi/560048    : The second long-standing,
+                               merged-from-genesis, public Ethereum testnet.
+                               - other           : Custom.
+ -c, --custom-network          Use custom genesis block for private Ethereum
+                               Network (as /path/to/genesis.json).
+
+LOGGING AND DEBUGGING OPTIONS:
+     --log-level               Sets the log level for process and topics (TRACE,
+                               DEBUG, INFO, NOTICE, WARN, ERROR, FATAL) [=Info
+                               topic level logging].
+     --log-metrics             Enable metrics logging [=false].
+     --log-metrics-interval    Interval at which to log metrics, in seconds
+                               [=10].
+     --metrics                 Enable the built-in metrics HTTP server [=false].
+     --metrics-port            Listening port of the built-in metrics HTTP
+                               server [=9093].
+     --metrics-address         Listening IP address of the built-in metrics HTTP
+                               server [=127.0.0.1, meaning local host only].
+
+NETWORKING OPTIONS:
+ -b, --bootstrap-node          Specifies one or more bootstrap nodes(as enode
+                               URL) to use when connecting to the network.
+     --bootstrap-file          Specifies a line-delimited file of bootstrap
+                               Ethereum network addresses(enode URL). By
+                               default, addresses will be added to bootstrap
+                               node list. But if the first line equals to
+                               `override` word, it will override built-in list.
+     --bootstrap-enr           ENR URI of node to bootstrap discovery from.
+                               Argument may be repeated.
+     --static-peers            Connect to one or more trusted peers(as enode
+                               URL).
+     --static-peers-file       Specifies a line-delimited file of trusted peers
+                               addresses(enode URL)to be added to the
+                               --static-peers list. If the first line equals to
+                               the word `override`, the file contents will
+                               replace the --static-peers list.
+     --static-peer-enr         ENR URI of node to connect to as trusted peer.
+                               Argument may be repeated.
+     --reconnect-max-retry     Specifies max number of retries if static peers
+                               disconnected/not connected. 0 = infinite. [=0].
+     --reconnect-interval      Interval in seconds before next attempt to
+                               reconnect to static peers. Min 5 seconds. [=15].
+     --listen-address          Listening IP address for Ethereum P2P and
+                               Discovery traffic [=$defaultListenAddressDesc].
+     --tcp-port                Ethereum P2P network listening TCP port [=30303].
+     --udp-port                Ethereum P2P network listening UDP port [=default
+                               to --tcp-port].
+     --max-peers               Maximum number of peers to connect to [=25].
+     --nat                     Specify method to use for determining public
+                               address. Must be one of: any, none, upnp, pmp,
+                               extip:<IP> [=any].
+     --discovery               Specify method to find suitable peer in an
+                               Ethereum network (None, V4, V5) [=V4].
+                               - None: Disables the peer discovery mechanism
+                               (manual peer addition).
+                               - V4  : Node Discovery Protocol v4(default).
+                               - V5  : Node Discovery Protocol v5.
+     --net-key                 P2P ethereum node (secp256k1) private key
+                               (random, path, hex) [=random].
+                               - random: generate random network key for this
+                               node instance.
+                               - path  : path to where the private key will be
+                               loaded or auto generated.
+                               - hex   : 32 bytes hex of network private key.
+     --agent-string            Node agent string which is used as identifier in
+                               network[=nimbus-eth1/v0.1.0-fae85d93/linux-amd64
+                               /Nim-2.2.4].
+
+PERFORMANCE OPTIONS
+     --num-threads             Number of worker threads ("0" = use as many
+                               threads as there are CPU cores available) [=0].
+
+LOCAL SERVICES OPTIONS:
+     --http-port               Listening port of the HTTP server(rpc, ws)
+                               [=8545].
+     --http-address            Listening IP address of the HTTP server(rpc, ws)
+                               [=127.0.0.1, meaning local host only].
+     --rpc                     Enable the JSON-RPC server [=false].
+     --rpc-api                 Enable specific set of RPC API (available: eth,
+                               debug) [=Eth].
+     --ws                      Enable the Websocket JSON-RPC server [=false].
+     --ws-api                  Enable specific set of Websocket RPC API
+                               (available: eth, debug) [=Eth].
+     --history-expiry          Enable the data from Portal Network [=false].
+     --portal-url              URL of the Portal Network.
+     --engine-api              Enable the Engine API [=false].
+     --engine-api-port         Listening port for the Engine API(http and ws)
+                               [=8551].
+     --engine-api-address      Listening address for the Engine API(http and ws)
+                               [=127.0.0.1, meaning local host only].
+     --engine-api-ws           Enable the WebSocket Engine API [=false].
+     --allowed-origins         Comma-separated list of domains from which to
+                               accept cross origin requests [=*].
+     --jwt-secret              Path to a file containing a 32 byte hex-encoded
+                               shared secret needed for websocket
+                               authentication. By default, the secret key is
+                               auto-generated. [="jwt.hex" in the data directory
+                               (see --data-dir)].
+
+Available sub-commands:
+
+nimbus_execution_client import [OPTIONS]...
+
+The following options are available:
+
+     --max-blocks              Maximum number of blocks to import
+                               [=uint64.high()].
+     --chunk-size              Number of blocks per database transaction
+                               [=8192].
+
+nimbus_execution_client import-rlp <blocks-file>
+
+ <blocks-file>                  One or more RLP encoded block(s) files.
