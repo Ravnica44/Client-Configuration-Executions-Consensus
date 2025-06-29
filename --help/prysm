@@ -1,3 +1,5 @@
+docker run --rm prysmaticlabs/prysm-beacon-chain:stable --help
+
 NAME:
    beacon-chain - this is a beacon chain implementation for Ethereum
 USAGE:
