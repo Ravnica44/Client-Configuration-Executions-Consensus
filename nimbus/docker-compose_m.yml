@@ -34,6 +34,7 @@ services:
     volumes:
       - /root/ethereum/execution_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
+      - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
     command:
       - nimbus_execution_client
       - --network=mainnet
@@ -51,6 +52,7 @@ services:
       - --engine-api-address=127.0.0.1
       - --jwt-secret=/jwt_m.hex
       - --data-dir=/data_m
+      - --bootstrap-file=/mainnet_bootstrap.txt
       - --num-threads=2
     logging:
       driver: "json-file"
@@ -114,6 +116,7 @@ services:
       - --nat=extip:YOUR.SERVER.IP.HERE  # Replace with your external IP
       - --bootstrap-file=/mainnet_bootstrap.txt
       - --max-peers=25
+      - --num-threads=2
     logging:
       driver: "json-file"
       options:
