@@ -37,7 +37,7 @@ services:
     command:
       - nimbus_execution_client
       - --network=mainnet
-      - --nat=extip:<IP> #specify IP
+      - --nat=extip:YOUR.SERVER.IP.HERE  # Replace with your external IP
       - --tcp-port=30303
       - --udp-port=30303
       - --discovery=V5
@@ -111,7 +111,7 @@ services:
       - --rest-port=5052
       - --tcp-port=9000
       - --udp-port=9000
-      - --nat=extip:<IP> #specify IP
+      - --nat=extip:YOUR.SERVER.IP.HERE  # Replace with your external IP
       - --bootstrap-file=/mainnet_bootstrap.txt
       - --max-peers=25
     logging:
