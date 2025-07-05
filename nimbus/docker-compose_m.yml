@@ -55,7 +55,7 @@ services:
       - --jwt-secret=/jwt_m.hex
       - --data-dir=/data_m
       - --bootstrap-node=$BOOTSTRAP_NODES
-      - --num-threads=2
+      - --num-threads=4
     logging:
       driver: "json-file"
       options:
@@ -101,7 +101,6 @@ services:
     volumes:
       - /root/ethereum/consensus_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
-      - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
     environment:
       - EXTERNAL_IP=${EXTERNAL_IP}
       - BOOTSTRAP_NODES=${BOOTSTRAP_NODES}
@@ -121,7 +120,7 @@ services:
       - --nat=extip:${EXTERNAL_IP}
       - --bootstrap-node=${BOOTSTRAP_NODES}
       - --max-peers=25
-      - --num-threads=2
+      - --num-threads=4
     logging:
       driver: "json-file"
       options:
