@@ -1,4 +1,4 @@
-docker run --rm statusim/nimbus-eth1:latest --help
+docker run --rm statusim/nimbus-eth1:master --help
 
 Nim version 2.2.4
 
