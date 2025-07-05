@@ -35,7 +35,6 @@ services:
     volumes:
       - /root/ethereum/execution_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
-      - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
     environment:
       - EXTERNAL_IP=${EXTERNAL_IP}
     command:
@@ -54,7 +53,7 @@ services:
       - --engine-api-address=127.0.0.1
       - --jwt-secret=/jwt_m.hex
       - --data-dir=/data_m
-      - --bootstrap-file=/mainnet_bootstrap.txt
+      - --bootstrap-node=$BOOTSTRAP_NODES
       - --num-threads=2
     logging:
       driver: "json-file"
