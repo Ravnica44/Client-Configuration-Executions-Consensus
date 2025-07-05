@@ -1,0 +1,53 @@
+services:
+  nimbus_eth1_m:
+    image: statusim/nimbus-eth1:master
+    container_name: nimbus_eth1_m
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 16g
+    mem_reservation: 8g
+    volumes:
+      - /root/ethereum/execution_m:/data_m
+      - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
+    command:
+      - --network=mainnet
+      - --nat=extip:<IP> #specify your IP
+      - --tcp-port=30303
+      - --udp-port=30303
+      - --discovery=V5
+      - --reconnect-interval=5
+      - --http-port=8545
+      - --http-address=0.0.0.0
+      - --rpc
+      - --rpc-api=eth,debug
+      - --engine-api
+      - --engine-api-port=8551
+      - --engine-api-address=127.0.0.1
+      - --jwt-secret=/jwt_m.hex
+      - --data-dir=/data_m
+      - --num-threads=2
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "0.0.0.0", "8545"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  nimbus_import:
+    image: statusim/nimbus-eth1:master
+    container_name: nimbus_import
+    restart: "no"
+    volumes:
+      - /root/ethereum/execution_m:/data_m
+      - /root/ethereum/era_m:/era_m:ro
+      - /root/ethereum/era1_m:/era1_m:ro
+    command:
+      - --data-dir=/data_m
+      - --era-dir=/era_m
+      - --era1-dir=/era1_m
+      - import
