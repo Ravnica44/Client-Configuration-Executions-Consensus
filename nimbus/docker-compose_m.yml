@@ -36,10 +36,12 @@ services:
       - /root/ethereum/execution_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
       - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
+    environment:
+      - EXTERNAL_IP=${EXTERNAL_IP}
     command:
       - nimbus_execution_client
       - --network=mainnet
-      - --nat=extip:YOUR.SERVER.IP.HERE  # Replace with your external IP
+      - --nat=extip:${EXTERNAL_IP}
       - --tcp-port=30303
       - --udp-port=30303
       - --discovery=V5
@@ -101,6 +103,8 @@ services:
       - /root/ethereum/consensus_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
       - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
+    environment:
+      - EXTERNAL_IP=${EXTERNAL_IP}
     depends_on:
       nimbus_eth1_m:
         condition: service_healthy
@@ -114,7 +118,7 @@ services:
       - --rest-port=5052
       - --tcp-port=9000
       - --udp-port=9000
-      - --nat=extip:YOUR.SERVER.IP.HERE  # Replace with your external IP
+      - --nat=extip:${EXTERNAL_IP}
       - --bootstrap-file=/mainnet_bootstrap.txt
       - --max-peers=25
       - --num-threads=2
