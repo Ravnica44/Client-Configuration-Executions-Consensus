@@ -1,5 +1,5 @@
 ```shell
-# Generate a secure JWT secret for Nimbus eth1 (run once before starting the execution node)
+# Generate a secure JWT secret for Nimbus eth1 (run once only)
 openssl rand -hex 32 > /root/ethereum/jwt_m.hex
 
 # Create execution and consensus data directories with correct ownership and permissions
@@ -20,8 +20,10 @@ curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Execu
 # Download mainnet_bootstrap.txt from GitHub
 curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/mainnet_bootstrap.txt -o /root/ethereum/mainnet_bootstrap.txt
 
-# Import pre-synced Era chain data and start Nimbus eth1 client
-docker compose -f docker-compose_m.yml run --rm nimbus_import && \
+# Import pre-synced Era chain data (run once before starting the execution node)
+docker compose -f docker-compose_m.yml run --rm nimbus_import
+
+# Start Nimbus execution node (consensus client)
 docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
 
 # Sync consensus client with trustedNodeSync (run once before starting the beacon node)
