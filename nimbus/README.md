@@ -14,6 +14,9 @@ mkdir -p /root/ethereum/era_m /root/ethereum/era1_m
 wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era.nimbus.team/ -P /root/ethereum/era_m
 wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era1.nimbus.team/ -P /root/ethereum/era1_m
 
+# Download docker-compose_m.yml from GitHub
+curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/nimbus/docker-compose_m.yml -o /root/ethereum/docker-compose_m.yml
+
 # Download mainnet_bootstrap.txt from GitHub
 curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/mainnet_bootstrap.txt -o /root/ethereum/mainnet_bootstrap.txt
 
