@@ -1,4 +1,25 @@
 services:
+  # ─────────────────────────────────────────────────────────────
+  # Phase 0: Import Execution Snapshot (manual one-shot)
+  # ─────────────────────────────────────────────────────────────
+  nimbus_import:
+    image: statusim/nimbus-eth1:master
+    container_name: nimbus_import
+    network_mode: host
+    restart: "no"
+    volumes:
+      - /root/ethereum/execution_m:/data_m
+      - /root/ethereum/era_m:/era_m:ro
+      - /root/ethereum/era1_m:/era1_m:ro
+    command:
+      - --data-dir=/data_m
+      - --era-dir=/era_m
+      - --era1-dir=/era1_m
+      - import
+
+  # ─────────────────────────────────────────────────────────────
+  # Execution client - Nimbus Mainnet Node
+  # ─────────────────────────────────────────────────────────────
   nimbus_eth1_m:
     image: statusim/nimbus-eth1:master
     container_name: nimbus_eth1_m
@@ -6,12 +27,17 @@ services:
     restart: unless-stopped
     mem_limit: 16g
     mem_reservation: 8g
+    ports:
+      - "0.0.0.0:8545:8545/tcp"  # HTTP RPC
+      - "30303:30303"            # P2P TCP
+      - "30303:30303/udp"        # P2P UDP
     volumes:
       - /root/ethereum/execution_m:/data_m
       - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
     command:
+      - nimbus_execution_client
       - --network=mainnet
-      - --nat=extip:<IP> #specify your IP
+      - --nat=extip:<IP> #specify IP
       - --tcp-port=30303
       - --udp-port=30303
       - --discovery=V5
@@ -38,16 +64,58 @@ services:
       retries: 5
       start_period: 20s
 
-  nimbus_import:
-    image: statusim/nimbus-eth1:master
-    container_name: nimbus_import
+  # ─────────────────────────────────────────────────────────────
+  # Phase 1: Trusted Node Sync (manual one-shot)
+  # ─────────────────────────────────────────────────────────────
+  nimbus_sync_m:
+    image: statusim/nimbus-eth2:multiarch-latest
+    container_name: nimbus_sync_m
+    network_mode: host
     restart: "no"
     volumes:
-      - /root/ethereum/execution_m:/data_m
-      - /root/ethereum/era_m:/era_m:ro
-      - /root/ethereum/era1_m:/era1_m:ro
+      - /root/ethereum/consensus_m:/data_m
     command:
+      - trustedNodeSync
+      - --network=mainnet
       - --data-dir=/data_m
-      - --era-dir=/era_m
-      - --era1-dir=/era1_m
-      - import
+      - --trusted-node-url=http://testing.mainnet.beacon-api.nimbus.team
+
+  # ─────────────────────────────────────────────────────────────
+  # Phase 2: Nimbus Beacon Node
+  # ─────────────────────────────────────────────────────────────
+  nimbus_m:
+    image: statusim/nimbus-eth2:multiarch-latest
+    container_name: nimbus_m
+    network_mode: host
+    restart: unless-stopped
+    mem_limit: 10g
+    mem_reservation: 6g
+    ports:
+      - "0.0.0.0:5052:5052/tcp"  # HTTP RPC
+      - "9000:9000/tcp"          # P2P TCP
+      - "9000:9000/udp"          # P2P UDP
+    volumes:
+      - /root/ethereum/consensus_m:/data_m
+      - /root/ethereum/jwt_m.hex:/jwt_m.hex:ro
+      - /root/ethereum/mainnet_bootstrap.txt:/mainnet_bootstrap.txt:ro
+    depends_on:
+      nimbus_eth1_m:
+        condition: service_healthy
+    command:
+      - --network=mainnet
+      - --data-dir=/data_m
+      - --el=http://127.0.0.1:8551
+      - --jwt-secret=/jwt_m.hex
+      - --rest
+      - --rest-address=0.0.0.0
+      - --rest-port=5052
+      - --tcp-port=9000
+      - --udp-port=9000
+      - --nat=extip:<IP> #specify IP
+      - --bootstrap-file=/mainnet_bootstrap.txt
+      - --max-peers=25
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
