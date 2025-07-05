@@ -20,15 +20,18 @@ curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Execu
 # Download mainnet_bootstrap.txt from GitHub
 curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/mainnet_bootstrap.txt -o /root/ethereum/mainnet_bootstrap.txt
 
+# Create .env file with your external IP (required for NAT configuration)
+echo "EXTERNAL_IP=$(curl -s ifconfig.me)" > /root/ethereum/.env
+
 # Start import pre-synced Era chain data (run once before starting the execution node)
-docker compose -f docker-compose_m.yml run --rm nimbus_import_m
+docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml run --rm nimbus_import_m
 
 # Start Nimbus execution node (execution client)
-docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
+docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml up --build -d nimbus_eth1_m
 
 # Sync consensus client with trustedNodeSync (run once before starting the beacon node)
-docker compose -f docker-compose_m.yml run --rm nimbus_sync_m
+docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml run --rm nimbus_sync_m
 
 # Start Nimbus beacon node (consensus client)
-docker compose -f docker-compose_m.yml up --build -d nimbus_eth2_m
+docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml up --build -d nimbus_eth2_m
 ```
