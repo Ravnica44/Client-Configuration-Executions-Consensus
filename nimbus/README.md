@@ -29,7 +29,7 @@ docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml run --rm n
 # Start Nimbus execution node (execution client)
 docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml up --build -d nimbus_eth1_m
 
-# Sync consensus client with trustedNodeSync (run once before starting the beacon node)
+# Start sync consensus client with trustedNodeSync (run once before starting the beacon node)
 docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml run --rm nimbus_sync_m
 
 # Start Nimbus beacon node (consensus client)
