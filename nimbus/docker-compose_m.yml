@@ -2,9 +2,9 @@ services:
   # ─────────────────────────────────────────────────────────────
   # Phase 0: Import Execution Snapshot (manual one-shot)
   # ─────────────────────────────────────────────────────────────
-  nimbus_import:
+  nimbus_import_m:
     image: statusim/nimbus-eth1:master
-    container_name: nimbus_import
+    container_name: nimbus_import_m
     network_mode: host
     restart: "no"
     volumes:
@@ -86,7 +86,7 @@ services:
   # ─────────────────────────────────────────────────────────────
   # Phase 2: Nimbus Beacon Node
   # ─────────────────────────────────────────────────────────────
-  nimbus_m:
+  nimbus_eth2_m:
     image: statusim/nimbus-eth2:multiarch-latest
     container_name: nimbus_m
     network_mode: host
