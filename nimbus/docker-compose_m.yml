@@ -12,11 +12,12 @@ services:
       - /root/ethereum/era_m:/era_m:ro
       - /root/ethereum/era1_m:/era1_m:ro
     command:
+      - import
+      - --network=mainnet
       - --data-dir=/data_m
       - --era-dir=/era_m
       - --era1-dir=/era1_m
-      - import
-
+      
   # ─────────────────────────────────────────────────────────────
   # Execution client - Nimbus Mainnet Node
   # ─────────────────────────────────────────────────────────────
