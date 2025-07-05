@@ -34,4 +34,7 @@ docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml run --rm n
 
 # Start Nimbus beacon node (consensus client)
 docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml up --build -d nimbus_eth2_m
+
+# (Optional) Start all services together
+docker compose --env-file /root/ethereum/.env -f docker-compose_m.yml up -d
 ```
