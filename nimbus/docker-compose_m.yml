@@ -39,7 +39,6 @@ services:
     environment:
       - EXTERNAL_IP=${EXTERNAL_IP}
     command:
-      - nimbus_execution_client
       - --network=mainnet
       - --nat=extip:${EXTERNAL_IP}
       - --tcp-port=30303
