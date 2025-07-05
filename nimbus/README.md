@@ -23,7 +23,7 @@ curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Execu
 # Import pre-synced Era chain data (run once before starting the execution node)
 docker compose -f docker-compose_m.yml run --rm nimbus_import
 
-# Start Nimbus execution node (consensus client)
+# Start Nimbus execution node (execution client)
 docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
 
 # Sync consensus client with trustedNodeSync (run once before starting the beacon node)
