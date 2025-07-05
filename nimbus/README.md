@@ -17,4 +17,10 @@ wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era1.ni
 # Import pre-synced Era chain data and start Nimbus eth1 client
 docker compose -f docker-compose_m.yml run --rm nimbus_import && \
 docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
+
+# Sync consensus client with trustedNodeSync (run once before starting the beacon node)
+docker compose -f docker-compose_m.yml run --rm nimbus_sync_m
+
+# Start Nimbus beacon node (consensus client)
+docker compose -f docker-compose_m.yml up --build -d nimbus_m
 ```
