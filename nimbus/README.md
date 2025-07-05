@@ -1,5 +1,5 @@
 ```shell
-# Generate a secure JWT secret for Nimbus eth1 (run only once)
+# Generate a secure JWT secret for Nimbus eth1 (run once before starting the execution node)
 openssl rand -hex 32 > /root/ethereum/jwt_m.hex
 
 # Create execution and consensus data directories with correct ownership and permissions
