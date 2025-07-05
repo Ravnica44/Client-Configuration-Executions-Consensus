@@ -1,3 +1,4 @@
+```shell
 # Generate a secure JWT secret for Nimbus eth1 (run only once)
 openssl rand -hex 32 > /root/ethereum/jwt_m.hex
 
@@ -16,3 +17,4 @@ wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era1.ni
 # Import pre-synced Era chain data and start Nimbus eth1 client
 docker compose -f docker-compose_m.yml run --rm nimbus_import && \
 docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
+```
