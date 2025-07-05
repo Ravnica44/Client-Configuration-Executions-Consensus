@@ -14,6 +14,9 @@ mkdir -p /root/ethereum/era_m /root/ethereum/era1_m
 wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era.nimbus.team/ -P /root/ethereum/era_m
 wget -r -c -q --show-progress --no-parent -nd -A '*.era' https://mainnet.era1.nimbus.team/ -P /root/ethereum/era1_m
 
+# Download mainnet_bootstrap.txt from GitHub
+curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/mainnet_bootstrap.txt -o /root/ethereum/mainnet_bootstrap.txt
+
 # Import pre-synced Era chain data and start Nimbus eth1 client
 docker compose -f docker-compose_m.yml run --rm nimbus_import && \
 docker compose -f docker-compose_m.yml up --build -d nimbus_eth1_m
