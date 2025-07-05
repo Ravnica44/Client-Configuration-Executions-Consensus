@@ -20,7 +20,7 @@ curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Execu
 # Download mainnet_bootstrap.txt from GitHub
 curl -sSL https://raw.githubusercontent.com/Ravnica44/Client-Configuration-Executions-Consensus/main/mainnet_bootstrap.txt -o /root/ethereum/mainnet_bootstrap.txt
 
-# Import pre-synced Era chain data (run once before starting the execution node)
+# Start import pre-synced Era chain data (run once before starting the execution node)
 docker compose -f docker-compose_m.yml run --rm nimbus_import
 
 # Start Nimbus execution node (execution client)
