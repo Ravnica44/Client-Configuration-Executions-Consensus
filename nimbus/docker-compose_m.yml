@@ -1,4 +1,4 @@
-h2_mservices:
+services:
   # ─────────────────────────────────────────────────────────────
   # Phase 0: Import Execution Snapshot (manual one-shot)
   # ─────────────────────────────────────────────────────────────
@@ -88,7 +88,7 @@ h2_mservices:
   # ─────────────────────────────────────────────────────────────
   nimbus_eth2_m:
     image: statusim/nimbus-eth2:multiarch-latest
-    container_name: nimbus_m
+    container_name: nimbus_eth2_m
     network_mode: host
     restart: unless-stopped
     mem_limit: 10g
