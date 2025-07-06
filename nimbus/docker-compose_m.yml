@@ -19,7 +19,7 @@ services:
       - --era1-dir=/era1_m
       
   # ─────────────────────────────────────────────────────────────
-  # Execution client - Nimbus Mainnet Node
+  # Execution client - Nimbus Execution Node
   # ─────────────────────────────────────────────────────────────
   nimbus_eth1_m:
     image: statusim/nimbus-eth1:master
