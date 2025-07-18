@@ -1,0 +1,443 @@
+docker run --rm us-docker.pkg.dev/oplabs-tools-artifacts/images/op-node:latest op-node --help
+NAME:
+   op-node - Optimism Rollup Node
+
+USAGE:
+   op-node [global options] command [command options]
+
+VERSION:
+   v1.13.5-7a0ab04e-1752261210
+
+DESCRIPTION:
+   The Optimism Rollup Node derives L2 block inputs from L1 data and drives an external L2 Execution Engine to build a L2 chain.
+
+COMMANDS:
+   p2p
+   genesis
+   doc
+   networks
+   interop   Experimental tools for OP-Stack interop networks.
+   help, h   Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+
+    --signer.header value                                                  ($OP_NODE_SIGNER_HEADER)
+          Headers to pass to the remote signer. Format `key=value`. Value can contain any
+          character allowed in a HTTP header. When using env vars, split with commas. When
+          using flags one key value pair per flag.
+
+    --signer.tls.enabled                (default: true)                    ($OP_NODE_SIGNER_TLS_ENABLED)
+          Enable or disable TLS client authentication for the signer
+
+   1. ROLLUP
+
+
+    --l1 value                          (default: "http://127.0.0.1:8545") ($OP_NODE_L1_ETH_RPC)
+          Address of L1 User JSON-RPC endpoint to use (eth namespace required)
+
+    --l1.beacon value                                                      ($OP_NODE_L1_BEACON)
+          Address of L1 Beacon-node HTTP endpoint to use.
+
+    --l2 value                                                             ($OP_NODE_L2_ENGINE_RPC)
+          Address of L2 Engine JSON-RPC endpoints to use (engine and eth namespace
+          required)
+
+    --l2.engine-rpc-timeout value       (default: 10s)                     ($OP_NODE_L2_ENGINE_RPC_TIMEOUT)
+          L2 engine client rpc timeout
+
+    --l2.enginekind value               (default: geth)                    ($OP_NODE_L2_ENGINE_KIND)
+          The kind of engine client, used to control the behavior of optimism in respect
+          to different types of engine clients. Valid options: geth, reth, erigon
+
+    --l2.jwt-secret value                                                  ($OP_NODE_L2_ENGINE_AUTH)
+          Path to JWT secret key. Keys are 32 bytes, hex encoded in a file. A new key will
+          be generated if the file is empty.
+
+    --network value                                                        ($OP_NODE_NETWORK)
+          Predefined network selection. Available networks: arena-z-mainnet,
+          automata-mainnet, base-devnet-0-sepolia-dev-0, base-mainnet, base-sepolia,
+          bob-mainnet, camp-sepolia, creator-chain-testnet-sepolia, cyber-mainnet,
+          cyber-sepolia, ethernity-mainnet, ethernity-sepolia, fraxtal-mainnet,
+          funki-mainnet, funki-sepolia, hashkeychain-mainnet, ink-mainnet, ink-sepolia,
+          lisk-mainnet, lisk-sepolia, lyra-mainnet, metal-mainnet, metal-sepolia,
+          mint-mainnet, mode-mainnet, mode-sepolia, op-mainnet, op-sepolia,
+          oplabs-devnet-0-sepolia-dev-0, orderly-mainnet, ozean-sepolia, pivotal-sepolia,
+          polynomial-mainnet, race-mainnet, race-sepolia, radius_testnet-sepolia,
+          redstone-mainnet, rehearsal-0-bn-0-rehearsal-0-bn,
+          rehearsal-0-bn-1-rehearsal-0-bn, settlus-mainnet-mainnet,
+          settlus-sepolia-sepolia, shape-mainnet, shape-sepolia, snax-mainnet,
+          soneium-mainnet, soneium-minato-sepolia, sseed-mainnet, swan-mainnet,
+          swell-mainnet, tbn-mainnet, tbn-sepolia, unichain-mainnet, unichain-sepolia,
+          worldchain-mainnet, worldchain-sepolia, xterio-eth-mainnet, zora-mainnet,
+          zora-sepolia
+
+    --override.canyon value             (default: 0)                       ($OP_NODE_OVERRIDE_CANYON)
+          Manually specify the Canyon fork timestamp, overriding the bundled setting
+
+    --override.delta value              (default: 0)                       ($OP_NODE_OVERRIDE_DELTA)
+          Manually specify the Delta fork timestamp, overriding the bundled setting
+
+    --override.ecotone value            (default: 0)                       ($OP_NODE_OVERRIDE_ECOTONE)
+          Manually specify the Ecotone fork timestamp, overriding the bundled setting
+
+    --override.fjord value              (default: 0)                       ($OP_NODE_OVERRIDE_FJORD)
+          Manually specify the Fjord fork timestamp, overriding the bundled setting
+
+    --override.granite value            (default: 0)                       ($OP_NODE_OVERRIDE_GRANITE)
+          Manually specify the Granite fork timestamp, overriding the bundled setting
+
+    --override.holocene value           (default: 0)                       ($OP_NODE_OVERRIDE_HOLOCENE)
+          Manually specify the Holocene fork timestamp, overriding the bundled setting
+
+    --override.interop value            (default: 0)                       ($OP_NODE_OVERRIDE_INTEROP)
+          Manually specify the Interop fork timestamp, overriding the bundled setting
+
+    --override.isthmus value            (default: 0)                       ($OP_NODE_OVERRIDE_ISTHMUS)
+          Manually specify the Isthmus fork timestamp, overriding the bundled setting
+
+    --override.pectrablobschedule value (default: 0)                       ($OP_NODE_OVERRIDE_PECTRABLOBSCHEDULE)
+          Manually specify the PectraBlobSchedule fork timestamp, overriding the bundled
+          setting
+
+    --rollup.config value                                                  ($OP_NODE_ROLLUP_CONFIG)
+          Rollup chain parameters
+
+    --rollup.halt value                                                    ($OP_NODE_ROLLUP_HALT)
+          Opt-in option to halt on incompatible protocol version requirements of the given
+          level (major/minor/patch/none), as signaled onchain in L1
+
+    --rollup.load-protocol-versions     (default: false)                   ($OP_NODE_ROLLUP_LOAD_PROTOCOL_VERSIONS)
+          Load protocol versions from the superchain L1 ProtocolVersions contract (if
+          available), and report in logs and metrics
+
+    --syncmode value                    (default: consensus-layer)         ($OP_NODE_SYNCMODE)
+          Blockchain sync mode (options: consensus-layer, execution-layer)
+
+   2. L1 RPC
+
+
+    --l1.beacon-fallbacks value, --l1.beacon-archiver value                                    ($OP_NODE_L1_BEACON_FALLBACKS, $OP_NODE_L1_BEACON_ARCHIVER)
+          Addresses of L1 Beacon-API compatible HTTP fallback endpoints. Used to fetch
+          blob sidecars not available at the l1.beacon (e.g. expired blobs).
+
+    --l1.beacon-header value                                               ($OP_NODE_L1_BEACON_HEADER)
+          Optional HTTP header to add to all requests to the L1 Beacon endpoint. Format:
+          'X-Key: Value'
+
+    --l1.beacon.fetch-all-sidecars      (default: false)                   ($OP_NODE_L1_BEACON_FETCH_ALL_SIDECARS)
+          If true, all sidecars are fetched and filtered locally. Workaround for buggy
+          Beacon nodes.
+
+    --l1.beacon.ignore                  (default: false)                   ($OP_NODE_L1_BEACON_IGNORE)
+          When false, halts op-node startup if the healthcheck to the Beacon-node endpoint
+          fails.
+
+    --l1.cache-size value               (default: 900)                     ($OP_NODE_L1_CACHE_SIZE)
+          Cache size for blocks, receipts and transactions. If this flag is set to 0, 2/3
+          of the sequencing window size is used (usually 2400). The default value of 900
+          (~3h of L1 blocks) is good for (high-throughput) networks that see frequent safe
+          head increments. On (low-throughput) networks with infrequent safe head
+          increments, it is recommended to set this value to 0, or a value that well
+          covers the typical span between safe head increments. Note that higher values
+          will cause significantly increased memory usage.
+
+    --l1.epoch-poll-interval value      (default: 6m24s)                   ($OP_NODE_L1_EPOCH_POLL_INTERVAL)
+          Poll interval for retrieving new L1 epoch updates such as safe and finalized
+          block changes. Disabled if 0 or negative.
+
+    --l1.http-poll-interval value       (default: 12s)                     ($OP_NODE_L1_HTTP_POLL_INTERVAL)
+          Polling interval for latest-block subscription when using an HTTP RPC provider.
+          Ignored for other types of RPC endpoints.
+
+    --l1.max-concurrency value          (default: 10)                      ($OP_NODE_L1_MAX_CONCURRENCY)
+          Maximum number of concurrent RPC requests to make to the L1 RPC provider.
+
+    --l1.rpc-max-batch-size value       (default: 20)                      ($OP_NODE_L1_RPC_MAX_BATCH_SIZE)
+          Maximum number of RPC requests to bundle, e.g. during L1 blocks receipt
+          fetching. The L1 RPC rate limit counts this as N items, but allows it to burst
+          at once.
+
+    --l1.rpc-rate-limit value           (default: 0)                       ($OP_NODE_L1_RPC_RATE_LIMIT)
+          Optional self-imposed global rate-limit on L1 RPC requests, specified in
+          requests / second. Disabled if set to 0.
+
+    --l1.rpckind value                  (default: standard)                ($OP_NODE_L1_RPC_KIND)
+          The kind of RPC provider, used to inform optimal transactions receipts fetching,
+          and thus reduce costs. Valid options: alchemy, quicknode, infura, parity,
+          nethermind, debug_geth, erigon, basic, any, standard
+
+    --l1.runtime-config-reload-interval value (default: 10m0s)                   ($OP_NODE_L1_RUNTIME_CONFIG_RELOAD_INTERVAL)
+          Poll interval for reloading the runtime config, useful when config events are
+          not being picked up. Disabled if 0 or negative.
+
+    --l1.trustrpc                       (default: false)                   ($OP_NODE_L1_TRUST_RPC)
+          Trust the L1 RPC, sync faster at risk of malicious/buggy RPC providing bad or
+          inconsistent L1 data
+
+    --verifier.l1-confs value           (default: 0)                       ($OP_NODE_VERIFIER_L1_CONFS)
+          Number of L1 blocks to keep distance from the L1 head before deriving L2 data
+          from. Reorgs are supported, but may be slow to perform.
+
+   3. SEQUENCER
+
+
+    --conductor.enabled                 (default: false)                   ($OP_NODE_CONDUCTOR_ENABLED)
+          Enable the conductor service
+
+    --conductor.rpc value               (default: "http://127.0.0.1:8547") ($OP_NODE_CONDUCTOR_RPC)
+          Conductor service rpc endpoint
+
+    --conductor.rpc-timeout value       (default: 1s)                      ($OP_NODE_CONDUCTOR_RPC_TIMEOUT)
+          Conductor service rpc timeout
+
+    --sequencer.enabled                 (default: false)                   ($OP_NODE_SEQUENCER_ENABLED)
+          Enable sequencing of new L2 blocks. A separate batch submitter has to be
+          deployed to publish the data for verifiers.
+
+    --sequencer.l1-confs value          (default: 4)                       ($OP_NODE_SEQUENCER_L1_CONFS)
+          Number of L1 blocks to keep distance from the L1 head as a sequencer for picking
+          an L1 origin.
+
+    --sequencer.max-safe-lag value      (default: 0)                       ($OP_NODE_SEQUENCER_MAX_SAFE_LAG)
+          Maximum number of L2 blocks for restricting the distance between L2 safe and
+          unsafe. Disabled if 0.
+
+    --sequencer.recover                 (default: false)                   ($OP_NODE_SEQUENCER_RECOVER)
+          Forces the sequencer to strictly prepare the next L1 origin and create empty L2
+          blocks
+
+    --sequencer.stopped                 (default: false)                   ($OP_NODE_SEQUENCER_STOPPED)
+          Initialize the sequencer in a stopped state. The sequencer can be started using
+          the admin_startSequencer RPC
+
+   4. LOGGING, METRICS, DEBUGGING, AND API
+
+
+    --fetch-withdrawal-root-from-state  (default: false)                   ($OP_NODE_FETCH_WITHDRAWAL_ROOT_FROM_STATE)
+          Read withdrawal_storage_root (aka message passer storage root) from state trie
+          (via execution layer) instead of the block header. Restores pre-Isthmus
+          behavior, requires an archive EL client.
+
+    --log.color                         (default: false)                   ($OP_NODE_LOG_COLOR)
+          Color the log output if in terminal mode
+
+    --log.format value                  (default: text)                    ($OP_NODE_LOG_FORMAT)
+          Format the log output. Supported formats: 'text', 'terminal', 'logfmt', 'json',
+          'json-pretty',
+
+    --log.level value                   (default: INFO)                    ($OP_NODE_LOG_LEVEL)
+          The lowest log level that will be output
+
+    --log.pid                           (default: false)                   ($OP_NODE_LOG_PID)
+          Show pid in the log
+
+    --metrics.addr value                (default: "0.0.0.0")               ($OP_NODE_METRICS_ADDR)
+          Metrics listening address
+
+    --metrics.enabled                   (default: false)                   ($OP_NODE_METRICS_ENABLED)
+          Enable the metrics server
+
+    --metrics.port value                (default: 7300)                    ($OP_NODE_METRICS_PORT)
+          Metrics listening port
+
+    --pprof.addr value                  (default: "0.0.0.0")               ($OP_NODE_PPROF_ADDR)
+          pprof listening address
+
+    --pprof.enabled                     (default: false)                   ($OP_NODE_PPROF_ENABLED)
+          Enable the pprof server
+
+    --pprof.path value                                                     ($OP_NODE_PPROF_PATH)
+          pprof file path. If it is a directory, the path is {dir}/{profileType}.prof
+
+    --pprof.port value                  (default: 6060)                    ($OP_NODE_PPROF_PORT)
+          pprof listening port
+
+    --pprof.type value                                                     ($OP_NODE_PPROF_TYPE)
+          pprof profile type. One of cpu, heap, goroutine, threadcreate, block, mutex,
+          allocs
+
+    --rpc.addr value                    (default: "0.0.0.0")               ($OP_NODE_RPC_ADDR)
+          rpc listening address
+
+    --rpc.admin-state value                                                ($OP_NODE_RPC_ADMIN_STATE)
+          File path used to persist state changes made via the admin API so they persist
+          across restarts. Disabled if not set.
+
+    --rpc.enable-admin                  (default: false)                   ($OP_NODE_RPC_ENABLE_ADMIN)
+          Enable the admin API
+
+    --rpc.port value                    (default: 9545)                    ($OP_NODE_RPC_PORT)
+          rpc listening port
+
+    --safedb.path value                                                    ($OP_NODE_SAFEDB_PATH)
+          File path used to persist safe head update data. Disabled if not set.
+
+   5. PEER-TO-PEER
+
+
+    --p2p.advertise.ip value                                               ($OP_NODE_P2P_ADVERTISE_IP)
+          The IP address to advertise in Discv5, put into the ENR of the node. This may
+          also be a hostname / domain name to resolve to an IP.
+
+    --p2p.advertise.tcp value           (default: 0)                       ($OP_NODE_P2P_ADVERTISE_TCP)
+          The TCP port to advertise in Discv5, put into the ENR of the node. Set to
+          p2p.listen.tcp value if 0.
+
+    --p2p.advertise.udp value           (default: 0)                       ($OP_NODE_P2P_ADVERTISE_UDP)
+          The UDP port to advertise in Discv5 as fallback if not determined by Discv5, put
+          into the ENR of the node. Set to p2p.listen.udp value if 0.
+
+    --p2p.ban.duration value            (default: 1h0m0s)                  ($OP_NODE_P2P_PEER_BANNING_DURATION)
+          The duration that peers are banned for.
+
+    --p2p.ban.peers                     (default: true)                    ($OP_NODE_P2P_PEER_BANNING)
+          Enables peer banning.
+
+    --p2p.ban.threshold value           (default: -100)                    ($OP_NODE_P2P_PEER_BANNING_THRESHOLD)
+          The minimum score below which peers are disconnected and banned.
+
+    --p2p.bootnodes value                                                  ($OP_NODE_P2P_BOOTNODES)
+          Comma-separated base64-format ENR list. Bootnodes to start discovering other
+          node records from.
+
+    --p2p.disable                       (default: false)                   ($OP_NODE_P2P_DISABLE)
+          Completely disable the P2P stack
+
+    --p2p.discovery.path value          (default: "opnode_discovery_db")   ($OP_NODE_P2P_DISCOVERY_PATH)
+          Discovered ENRs are persisted in a database to recover from a restart without
+          having to bootstrap the discovery process again. Set to 'memory' to never
+          persist the peerstore.
+
+    --p2p.listen.ip value               (default: "0.0.0.0")               ($OP_NODE_P2P_LISTEN_IP)
+          IP to bind LibP2P and Discv5 to
+
+    --p2p.listen.tcp value              (default: 9222)                    ($OP_NODE_P2P_LISTEN_TCP_PORT)
+          TCP port to bind LibP2P to. Any available system port if set to 0.
+
+    --p2p.listen.udp value              (default: 0)                       ($OP_NODE_P2P_LISTEN_UDP_PORT)
+          UDP port to bind Discv5 to. Same as TCP port if left 0.
+
+    --p2p.nat                           (default: false)                   ($OP_NODE_P2P_NAT)
+          Enable NAT traversal with PMP/UPNP devices to learn external IP.
+
+    --p2p.netrestrict value                                                ($OP_NODE_P2P_NETRESTRICT)
+          Comma-separated list of CIDR masks. P2P will only try to connect on these
+          networks
+
+    --p2p.no-discovery                  (default: false)                   ($OP_NODE_P2P_NO_DISCOVERY)
+          Disable Discv5 (node discovery)
+
+    --p2p.peers.grace value             (default: 30s)                     ($OP_NODE_P2P_PEERS_GRACE)
+          Grace period to keep a newly connected peer around, if it is not misbehaving.
+
+    --p2p.peers.hi value                (default: 30)                      ($OP_NODE_P2P_PEERS_HI)
+          High-tide peer count. The node starts pruning peer connections slowly after
+          reaching this number.
+
+    --p2p.peers.lo value                (default: 20)                      ($OP_NODE_P2P_PEERS_LO)
+          Low-tide peer count. The node actively searches for new peer connections if
+          below this amount.
+
+    --p2p.peerstore.path value          (default: "opnode_peerstore_db")   ($OP_NODE_P2P_PEERSTORE_PATH)
+          Peerstore database location. Persisted peerstores help recover peers after
+          restarts. Set to 'memory' to never persist the peerstore. Peerstore records will
+          be pruned / expire as necessary. Warning: a copy of the priv network key of the
+          local peer will be persisted here.
+
+    --p2p.priv.path value               (default: "opnode_p2p_priv.txt")   ($OP_NODE_P2P_PRIV_PATH)
+          Read the hex-encoded 32-byte private key for the peer ID from this txt file.
+          Created if not already exists.Important to persist to keep the same network
+          identity after restarting, maintaining the previous advertised identity.
+
+    --p2p.scoring value                 (default: "light")                 ($OP_NODE_P2P_PEER_SCORING)
+          Sets the peer scoring strategy for the P2P stack. Can be one of: none or light.
+
+    --p2p.sequencer.key value                                              ($OP_NODE_P2P_SEQUENCER_KEY)
+          Hex-encoded private key for signing off on p2p application messages as
+          sequencer.
+
+    --p2p.static value                                                     ($OP_NODE_P2P_STATIC)
+          Comma-separated multiaddr-format peer list. Static connections to make and
+          maintain, these peers will be regarded as trusted. Addresses of the local peer
+          are ignored. Duplicate/Alternative addresses for the same peer all apply, but
+          only a single connection per peer is maintained.
+
+    --p2p.sync.onlyreqtostatic          (default: false)                   ($OP_NODE_P2P_SYNC_ONLYREQTOSTATIC)
+          Configure P2P to forward RequestL2Range requests to static peers only.
+
+    --p2p.sync.req-resp                 (default: true)                    ($OP_NODE_P2P_SYNC_REQ_RESP)
+          Enables P2P req-resp alternative sync method, on both server and client side.
+
+    --signer.address value                                                 ($OP_NODE_SIGNER_ADDRESS)
+          Address the signer is signing requests for
+
+    --signer.endpoint value                                                ($OP_NODE_SIGNER_ENDPOINT)
+          Signer endpoint the client will connect to
+
+    --signer.tls.ca value               (default: "tls/ca.crt")            ($OP_NODE_SIGNER_TLS_CA)
+          tls ca cert path
+
+    --signer.tls.cert value             (default: "tls/tls.crt")           ($OP_NODE_SIGNER_TLS_CERT)
+          tls cert path
+
+    --signer.tls.key value              (default: "tls/tls.key")           ($OP_NODE_SIGNER_TLS_KEY)
+          tls key
+
+   6. ALT-DA (EXPERIMENTAL)
+
+
+    --altda.da-server value                                                ($OP_NODE_ALTDA_DA_SERVER)
+          HTTP address of a DA Server
+
+    --altda.da-service                  (default: false)                   ($OP_NODE_ALTDA_DA_SERVICE)
+          Use DA service type where commitments are generated by Alt-DA server
+
+    --altda.enabled                     (default: false)                   ($OP_NODE_ALTDA_ENABLED)
+          Enable Alt-DA mode
+          Alt-DA Mode is a Beta feature of the MIT licensed OP Stack.
+          While it has received initial review from core contributors, it is still
+          undergoing testing, and may have bugs or other issues.
+
+    --altda.get-timeout value           (default: 0s)                      ($OP_NODE_ALTDA_GET_TIMEOUT)
+          Timeout for get requests. 0 means no timeout.
+
+    --altda.max-concurrent-da-requests value (default: 1)                       ($OP_NODE_ALTDA_MAX_CONCURRENT_DA_REQUESTS)
+          Maximum number of concurrent requests to the DA server
+
+    --altda.put-timeout value           (default: 0s)                      ($OP_NODE_ALTDA_PUT_TIMEOUT)
+          Timeout for put requests. 0 means no timeout.
+
+    --altda.verify-on-read              (default: true)                    ($OP_NODE_ALTDA_VERIFY_ON_READ)
+          Verify input data matches the commitments from the DA storage service
+
+   7. MISC
+
+
+    --experimental.sequencer-api        (default: false)                   ($OP_NODE_EXPERIMENTAL_SEQUENCER_API)
+          Enables experimental test sequencer RPC functionality
+
+    --help, -h                          (default: false)
+          show help
+
+    --version, -v                       (default: false)
+          print the version
+
+   8. INTEROP (SUPER EXPERIMENTAL)
+
+
+    --interop.dependency-set value                                         ($OP_NODE_INTEROP_DEPENDENCY_SET)
+          Dependency-set configuration, point at JSON file.
+
+    --interop.jwt-secret value                                             ($OP_NODE_INTEROP_JWT_SECRET)
+          Interop RPC server authentication. Path to JWT secret key. Keys are 32 bytes,
+          hex encoded in a file. A new key will be generated if the file is empty. Applies
+          only to Interop-enabled networks.
+
+    --interop.rpc.addr value                                               ($OP_NODE_INTEROP_RPC_ADDR)
+          Interop Websocket-only RPC listening address, for supervisor service to manage
+          syncing of the op-node.Applies only to Interop-enabled networks. Optional,
+          disabled if left empty. Do not enable if you do not run a supervisor service.
+
+    --interop.rpc.port value            (default: 9645)                    ($OP_NODE_INTEROP_RPC_PORT)
+          Interop RPC listening port, to serve supervisor syncing.Applies only to
+          Interop-enabled networks.
