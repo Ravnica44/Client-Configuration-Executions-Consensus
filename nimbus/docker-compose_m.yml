@@ -82,7 +82,7 @@ services:
       - trustedNodeSync
       - --network=mainnet
       - --data-dir=/data_m
-      - --trusted-node-url=http://testing.mainnet.beacon-api.nimbus.team
+      - --trusted-node-url=http://testing.mainnet.beacon-api.nimbus.team # https://github.com/eth-clients/checkpoint-sync-endpoints/blob/main/endpoints/mainnet.yaml
 
   # ─────────────────────────────────────────────────────────────
   # Phase 2: Nimbus Beacon Node
