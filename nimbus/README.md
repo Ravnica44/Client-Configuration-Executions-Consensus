@@ -5,7 +5,7 @@ openssl rand -hex 32 > /root/ethereum/jwt_m.hex
 # Create execution and consensus data directories with correct ownership and permissions
 mkdir -p /root/ethereum/execution_m /root/ethereum/consensus_m
 chown -R 1000:1000 /root/ethereum/execution_m /root/ethereum/consensus_m
-chmod -R 755 /root/ethereum/execution_m /root/ethereum/consensus_m
+chmod -R 700 /root/ethereum/execution_m /root/ethereum/consensus_m
 
 # Create directories for Era state archive files
 mkdir -p /root/ethereum/era_m /root/ethereum/era1_m
