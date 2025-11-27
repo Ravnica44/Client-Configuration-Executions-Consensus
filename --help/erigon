@@ -1,4 +1,4 @@
-root@vmi2487179:~# docker run --rm erigontech/erigon:v3.3.0 --help
+docker run --rm erigontech/erigon:v3.3.0 --help
 
 NAME:
    erigon - erigon
